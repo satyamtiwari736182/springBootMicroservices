@@ -1,0 +1,33 @@
+spring:
+    application:
+        name: apigateway
+    cloud:
+        refresh:
+            enabled: false
+        gateway:
+            server:
+                webflux:
+                    routes:
+                        - id: SERVICE1
+                          uri: lb://SERVICE1
+                        #   uri: http://localhost:8081
+                          predicates:
+                            - Path=/service1/**
+                        - id: SERVICE2
+                          uri: lb://SERVICE2
+                          predicates:
+                            - Path=/service2/**
+
+
+
+server:
+    port: 8084
+
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        fetch-registry: true
+        register-with-eureka: true
+        service-url:
+            defaultZone: http://localhost:8761/eureka/
